@@ -1,7 +1,7 @@
 import requests
 from django.utils import timezone
 from django.conf import settings
-
+from datetime import datetime  
 
 def search_thehive_for_ticket_id(watcher_id, thehive_url, api_key, item_type=None):
     """
@@ -189,6 +189,7 @@ def create_new_alert(ticket_id, title, description, severity, tlp, pap, tags, ap
         "tags": tags,
         "type": app_name,
         "source": "watcher",
+        "date": datetime.now().timestamp() * 1000,
         "sourceRef": ticket_id,
         "customFields": customFields or {
             settings.THE_HIVE_CUSTOM_FIELD: {"string": ticket_id}, 
